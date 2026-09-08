@@ -1,35 +1,38 @@
+import * as Phaser from 'phaser';
 import { Boot } from './scenes/Boot';
-import { Game as MainGame } from './scenes/Game';
-import { GameOver } from './scenes/GameOver';
-import { MainMenu } from './scenes/MainMenu';
 import { Preloader } from './scenes/Preloader';
-import { AUTO, Game, Scale } from 'phaser';
+import { MainMenu } from './scenes/MainMenu';
+import { Game } from './scenes/Game';
+import { AdMob } from '@capacitor-community/admob';
 
-//  Find out more information about the Game Config at:
-//  https://docs.phaser.io/api-documentation/typedef/types-core#gameconfig
 const config = {
-    type: AUTO,
-    width: 1024,
-    height: 768,
+    type: Phaser.AUTO,
+    width: 1080,
+    height: 2280,
     parent: 'game-container',
-    backgroundColor: '#028af8',
+    backgroundColor: '#1e293b',
     scale: {
-        mode: Scale.FIT,
-        autoCenter: Scale.CENTER_BOTH
+        mode: Phaser.Scale.FIT,
+        autoCenter: Phaser.Scale.CENTER_BOTH
     },
-    scene: [
-        Boot,
-        Preloader,
-        MainMenu,
-        MainGame,
-        GameOver
-    ]
+    scene: [Boot, Preloader, MainMenu, Game]
 };
 
-const StartGame = (parent) => {
+let gameInstance = null;
 
-    return new Game({ ...config, parent });
+export async function startApp() {
+    try {
+        await AdMob.initialize({
+            initializeForTesting: true,
+        });
+        console.log('AdMob inicializado');
+    } catch (error) {
+        console.error('Error al inicializar AdMob:', error);
+    }
 
+    gameInstance = new Phaser.Game(config);
+    return gameInstance;
 }
 
-export default StartGame;
+// ⬇️ AÑADE ESTA LÍNEA AL FINAL DEL ARCHIVO ⬇️
+export default startApp;

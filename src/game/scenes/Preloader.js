@@ -1,46 +1,56 @@
 import { Scene } from 'phaser';
 
-export class Preloader extends Scene
-{
-    constructor ()
-    {
+export class Preloader extends Scene {
+    constructor() {
         super('Preloader');
     }
 
-    init ()
-    {
-        //  We loaded this image in our Boot Scene, so we can display it here
-        this.add.image(512, 384, 'background');
+    init(data) {
+        // Guardamos la dificultad elegida si venimos del menú
+        this.selectedDifficulty = data.difficulty || null;
+    }
 
-        //  A simple progress bar. This is the outline of the bar.
-        this.add.rectangle(512, 384, 468, 32).setStrokeStyle(1, 0xffffff);
+    create() {
+        // Fondo uniforme
+        this.cameras.main.setBackgroundColor('#1e293b');
 
-        //  This is the progress bar itself. It will increase in size from the left based on the % of progress.
-        const bar = this.add.rectangle(512-230, 384, 4, 28, 0xffffff);
+        // Texto de carga
+        const loadingText = this.selectedDifficulty
+            ? 'Generando Sudoku...'
+            : 'Cargando...';
 
-        //  Use the 'progress' event emitted by the LoaderPlugin to update the loading bar
-        this.load.on('progress', (progress) => {
+        this.add.text(540, 1000, loadingText, {
+            fontFamily: 'sans-serif',
+            fontSize: '48px',
+            color: '#38bdf8',
+            fontStyle: 'bold'
+        }).setOrigin(0.5);
 
-            //  Update the progress bar (our bar is 464px wide, so 100% = 464px)
-            bar.width = 4 + (460 * progress);
+        // Spinner/Animación simple de puntos
+        const dots = this.add.text(540, 1100, '• • •', {
+            fontFamily: 'sans-serif',
+            fontSize: '64px',
+            color: '#94a3b8'
+        }).setOrigin(0.5);
 
+        this.tweens.add({
+            targets: dots,
+            alpha: { from: 0.2, to: 1 },
+            duration: 600,
+            yoyo: true,
+            repeat: -1
         });
-    }
 
-    preload ()
-    {
-        //  Load the assets for the game - Replace with your own assets
-        this.load.setPath('assets');
-
-        this.load.image('logo', 'logo.png');
-    }
-
-    create ()
-    {
-        //  When all the assets have loaded, it's often worth creating global objects here that the rest of the game can use.
-        //  For example, you can define global animations here, so we can use them in other scenes.
-
-        //  Move to the MainMenu. You could also swap this for a Scene Transition, such as a camera fade.
-        this.scene.start('MainMenu');
+        // Damos un pequeño margen (50ms) para que el navegador dibuje la pantalla de carga 
+        // antes de meterle la trilla de bucles a la CPU para generar el tablero.
+        this.time.delayedCall(50, () => {
+            if (this.selectedDifficulty) {
+                // Ir a la partida con la dificultad seleccionada
+                this.scene.start('Game', { difficulty: this.selectedDifficulty });
+            } else {
+                // Carga inicial -> ir al Menú Principal
+                this.scene.start('MainMenu');
+            }
+        });
     }
 }
