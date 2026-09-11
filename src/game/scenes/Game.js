@@ -56,17 +56,30 @@ export class Game extends Scene {
     }
 
     createHeader() {
-        // Botón Menú
-        const menuBtn = this.add.rectangle(160, 140, 200, 80, 0x334155)
-            .setInteractive({ useHandCursor: true });
+        // Dimensiones y posición del botón de menú
+        const btnX = 160;
+        const btnY = 140;
+        const btnW = 220;
+        const btnH = 80;
+        const radius = 20;
 
-        this.add.text(160, 140, '← Menú', {
+        // 1. Dibujar el fondo redondeado del botón Menú
+        const menuBtnGfx = this.add.graphics();
+        menuBtnGfx.fillStyle(0x334155, 1); // Color original (gris azulado)
+        menuBtnGfx.fillRoundedRect(btnX - btnW / 2, btnY - btnH / 2, btnW, btnH, radius);
+
+        // 2. Texto del botón
+        this.add.text(btnX, btnY, '←  Menú', {
             fontFamily: 'sans-serif',
-            fontSize: '36px',
+            fontSize: '44px',
             color: '#ffffff'
         }).setOrigin(0.5);
 
-        menuBtn.on('pointerdown', () => {
+        // 3. Crear zona invisible para capturar los clics
+        const menuBtnZone = this.add.zone(btnX, btnY, btnW, btnH)
+            .setInteractive({ useHandCursor: true });
+
+        menuBtnZone.on('pointerdown', () => {
             if (this.timerEvent) this.timerEvent.remove();
             this.scene.start('MainMenu');
         });
@@ -74,7 +87,7 @@ export class Game extends Scene {
         // Etiqueta de dificultad
         this.add.text(540, 140, this.difficulty.toUpperCase(), {
             fontFamily: 'sans-serif',
-            fontSize: '40px',
+            fontSize: '50px',
             color: '#38bdf8',
             fontStyle: 'bold'
         }).setOrigin(0.5);
@@ -82,11 +95,10 @@ export class Game extends Scene {
         // Cronómetro
         this.timerText = this.add.text(900, 140, '00:00', {
             fontFamily: 'sans-serif',
-            fontSize: '40px',
+            fontSize: '50px',
             color: '#ffffff'
         }).setOrigin(0.5);
     }
-
     drawGrid() {
         const graphics = this.add.graphics();
         graphics.fillStyle(0x0f172a, 1);
@@ -137,7 +149,7 @@ export class Game extends Scene {
                 // Texto del número principal
                 const txt = this.add.text(x, y, val !== 0 ? val.toString() : '', {
                     fontFamily: 'sans-serif',
-                    fontSize: '56px',
+                    fontSize: '75px',
                     color: isFixed ? '#ffffff' : '#38bdf8',
                     fontStyle: isFixed ? 'bold' : 'normal'
                 }).setOrigin(0.5);
@@ -152,7 +164,7 @@ export class Game extends Scene {
 
                     const noteTxt = this.add.text(nx, ny, '', {
                         fontFamily: 'sans-serif',
-                        fontSize: '22px',
+                        fontSize: '44px',
                         color: '#94a3b8'
                     }).setOrigin(0.5);
 
@@ -206,7 +218,7 @@ export class Game extends Scene {
     }
 
     createHintButton(x, y) {
-        const radius = 55;
+        const radius = 60;
 
         this.hintBg = this.add.circle(x, y, radius, 0x334155)
             .setInteractive({ useHandCursor: true });
@@ -218,7 +230,7 @@ export class Game extends Scene {
 
         this.hintCountText = this.add.text(x + 22, y + 2, `${this.hintsRemaining}`, {
             fontFamily: 'sans-serif',
-            fontSize: '34px',
+            fontSize: '40px',
             color: '#facc15',
             fontStyle: 'bold'
         }).setOrigin(0.5);
@@ -263,7 +275,7 @@ export class Game extends Scene {
 
             this.add.text(x, padStartY, i.toString(), {
                 fontFamily: 'sans-serif',
-                fontSize: '52px',
+                fontSize: '75px',
                 color: '#ffffff',
                 fontStyle: 'bold'
             }).setOrigin(0.5);
@@ -594,7 +606,7 @@ export class Game extends Scene {
         const finalTime = this.timerText ? this.timerText.text : '00:00';
         this.add.text(540, 960, `Tiempo: ${finalTime}`, {
             fontFamily: 'sans-serif',
-            fontSize: '44px',
+            fontSize: '50px',
             color: '#f8fafc'
         }).setOrigin(0.5);
 
@@ -603,7 +615,7 @@ export class Game extends Scene {
 
         this.add.text(540, 1120, 'Volver al Menú', {
             fontFamily: 'sans-serif',
-            fontSize: '40px',
+            fontSize: '50px',
             color: '#0f172a',
             fontStyle: 'bold'
         }).setOrigin(0.5);

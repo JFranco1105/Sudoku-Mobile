@@ -34,5 +34,4 @@ export async function startApp() {
     return gameInstance;
 }
 
-// ⬇️ AÑADE ESTA LÍNEA AL FINAL DEL ARCHIVO ⬇️
 export default startApp;

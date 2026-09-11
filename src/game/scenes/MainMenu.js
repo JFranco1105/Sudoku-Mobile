@@ -17,7 +17,7 @@ export class MainMenu extends Scene {
 
         this.add.text(540, 370, 'Selecciona Dificultad', {
             fontFamily: 'sans-serif',
-            fontSize: '40px',
+            fontSize: '50px',
             color: '#94a3b8'
         }).setOrigin(0.5);
 
@@ -31,9 +31,16 @@ export class MainMenu extends Scene {
     }
 
     createButton(x, y, text, color, difficulty) {
-        const bg = this.add.rectangle(x, y, 650, 120, color)
-            .setInteractive({ useHandCursor: true });
+        const width = 650;
+        const height = 120;
+        const radius = 24; // Controla qué tan redondeado es el botón
 
+        // 1. Dibujar el fondo redondeado del botón
+        const bg = this.add.graphics();
+        bg.fillStyle(color, 1);
+        bg.fillRoundedRect(x - width / 2, y - height / 2, width, height, radius);
+
+        // 2. Añadir el texto encima
         this.add.text(x, y, text, {
             fontFamily: 'sans-serif',
             fontSize: '48px',
@@ -41,7 +48,10 @@ export class MainMenu extends Scene {
             fontStyle: 'bold'
         }).setOrigin(0.5);
 
-        bg.on('pointerdown', () => {
+        // 3. Crear una zona interactiva invisible del mismo tamaño para el clic
+        const zone = this.add.zone(x, y, width, height).setInteractive({ useHandCursor: true });
+
+        zone.on('pointerdown', () => {
             // En lugar de ir directo a Game, pasamos por Preloader para mostrar el mensaje de generación
             this.scene.start('Preloader', { difficulty });
         });
@@ -53,14 +63,25 @@ export class MainMenu extends Scene {
         // Título de Estadísticas
         this.add.text(540, 1080, '📊 MIS ESTADÍSTICAS', {
             fontFamily: 'sans-serif',
-            fontSize: '44px',
+            fontSize: '50px',
             color: '#ffffff',
             fontStyle: 'bold'
         }).setOrigin(0.5);
 
-        // Tarjeta contenedora para las estadísticas
-        this.add.rectangle(540, 1380, 900, 480, 0x0f172a, 0.8)
-            .setStrokeStyle(4, 0x334155);
+        // Tarjeta contenedora REDONDEADA para las estadísticas
+        const statsW = 900;
+        const statsH = 480;
+        const statsX = 540;
+        const statsY = 1380;
+        const statsRadius = 32; // Esquinas más suaves para la tarjeta grande
+
+        const statsBg = this.add.graphics();
+        // Relleno oscuro semi-transparente
+        statsBg.fillStyle(0x0f172a, 0.8);
+        statsBg.fillRoundedRect(statsX - statsW / 2, statsY - statsH / 2, statsW, statsH, statsRadius);
+        // Borde gris azulado
+        statsBg.lineStyle(4, 0x334155, 1);
+        statsBg.strokeRoundedRect(statsX - statsW / 2, statsY - statsH / 2, statsW, statsH, statsRadius);
 
         const formatTime = (sec) => {
             if (!sec) return '--:--';
@@ -81,7 +102,7 @@ export class MainMenu extends Scene {
             // Nombre de dificultad
             this.add.text(140, d.y, d.label, {
                 fontFamily: 'sans-serif',
-                fontSize: '38px',
+                fontSize: '46px',
                 color: d.color,
                 fontStyle: 'bold'
             }).setOrigin(0, 0.5);
@@ -89,14 +110,14 @@ export class MainMenu extends Scene {
             // Victorias
             this.add.text(480, d.y, `🏆 ${data.won}`, {
                 fontFamily: 'sans-serif',
-                fontSize: '36px',
+                fontSize: '50px',
                 color: '#e2e8f0'
             }).setOrigin(0, 0.5);
 
             // Record
             this.add.text(720, d.y, `⏱️ ${formatTime(data.bestTime)}`, {
                 fontFamily: 'sans-serif',
-                fontSize: '36px',
+                fontSize: '50px',
                 color: '#38bdf8'
             }).setOrigin(0, 0.5);
         });
