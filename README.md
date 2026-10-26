@@ -1,92 +1,85 @@
 # Sudoku Mobile
 
-Sudoku Mobile es una aplicación móvil moderna desarrollada para ofrecer la experiencia clásica del juego de Sudoku en dispositivos móviles. Esta aplicación resuelve la necesidad de los entusiastas de los rompecabezas de contar con una plataforma intuitiva, personalizable y accesible sin conexión para ejercitar la mente en cualquier momento y lugar.
+Sudoku Mobile es una aplicación nativa para Android desarrollada en Java, diseñada para ofrecer la experiencia clásica del juego de lógica en dispositivos móviles de forma ligera, rápida y sin distracciones.
 
 ## Características Principales (Features)
 
-- **Múltiples Niveles de Dificultad**: Tableros generados para diferentes niveles de habilidad (Fácil, Medio, Difícil y Experto).
-- **Sistema de Notas (Modo Lápiz)**: Permite anotar posibles números candidatos en celdas vacías antes de confirmar la respuesta.
-- **Detección de Errores e Historial**: Resaltado visual opcional para números duplicados y función de deshacer/rehacer movimientos.
-- **Temporizador y Estadísticas**: Seguimiento del tiempo transcurrido en cada partida y registro de récords personales.
-- **Diseño Adaptativo / Modo Oscuro**: Interfaz optimizada para pantallas táctiles con soporte para temas claro y oscuro.
+- **Juego Clásico de Sudoku**: Tableros interactivos con las reglas tradicionales de colocación de números.
+- **Interfaz Nativa y Limpia**: Diseñada específicamente para el ecosistema Android utilizando vistas nativas en XML.
+- **Control de Tiempos y Movimientos**: Interfaz responsiva adaptada a diferentes tamaños de pantalla en dispositivos Android.
+- **Persistencia Local**: Guardado del estado de las partidas para retomar el juego en cualquier momento.
 
 ## Tecnologías Utilizadas
 
-- **Framework**: [React Native](https://reactnative.dev/) / [Expo](https://expo.dev/)
-- **Lenguaje**: JavaScript (ES6+) / TypeScript
-- **Gestión de Estado**: React Context API / Redux Toolkit
-- **Navegación**: React Navigation
-- **Estilos**: StyleSheet / Tailwind CSS (NativeWind)
+- **Lenguaje**: Java
+- **Plataforma**: Android SDK
+- **Sistema de Construcción**: Gradle
+- **IDE**: Android Studio
 
 ## Requisitos Previos
 
-Antes de comenzar con la instalación, asegúrate de tener instalado en tu sistema:
+Antes de comenzar, asegúrate de tener instalado el siguiente software en tu entorno de desarrollo:
 
-- **Node.js**: v18.0.0 o superior ([Descargar Node.js](https://nodejs.org/))
-- **npm** (v9.0.0+) o **yarn** (v1.22.0+)
-- **Git**: ([Descargar Git](https://git-scm.com/))
-- **Expo Go** (opcional, en tu dispositivo físico iOS/Android) o un emulador de Android Studio / Xcode.
+- [Android Studio](https://developer.android.com/studio) (versión reciente recomendada)
+- [Java Development Kit (JDK)](https://adoptium.net/) (JDK 11 o JDK 17)
+- [Android SDK](https://developer.android.com/studio) (configurado a través de Android Studio)
+- [Git](https://git-scm.com/)
 
 ## Instalación y Configuración
 
-Sigue estos pasos para clonar e instalar el proyecto en tu entorno local:
+Sigue estos pasos para clonar y preparar el proyecto localmente:
 
-1. **Clonar el repositorio:**
+1. **Clonar el repositorio**:
    ```bash
    git clone https://github.com/Llellesito/Sudoku-Mobile.git
    cd Sudoku-Mobile
    ```
 
-2. **Instalar dependencias:**
-   ```bash
-   npm install
-   # O si utilizas yarn:
-   yarn install
-   ```
+2. **Abrir en Android Studio**:
+   Abre Android Studio, selecciona **Open** y elige la carpeta `Sudoku-Mobile`. Espera a que Gradle ejecute la sincronización inicial de dependencias.
 
-3. **Configurar variables de entorno:**
-   Si el proyecto incluye configuración de entorno, copia el archivo de plantilla `.env.example`:
-   ```bash
-   cp .env.example .env
-   ```
-   *(Ajusta las variables dentro de `.env` según tus necesidades locales).*
+3. **Configurar dispositivo de pruebas**:
+   Asegúrate de tener un emulador Android (AVD) creado o un dispositivo físico conectado con el modo de **Depuración por USB** activado.
 
 ## Modo de Uso
 
-Comandos principales para ejecutar la aplicación en entorno de desarrollo:
+Comandos de Gradle para compilar y probar la aplicación desde la consola:
 
-- **Iniciar el servidor de desarrollo (Metro Bundler / Expo):**
+- **Compilar la aplicación (Modo Debug)**:
   ```bash
-  npm start
+  ./gradlew assembleDebug
   ```
 
-- **Ejecutar en emulador de Android:**
+- **Instalar en dispositivo o emulador conectado**:
   ```bash
-  npm run android
+  ./gradlew installDebug
   ```
 
-- **Ejecutar suite de pruebas unitarias:**
+- **Ejecutar pruebas unitarias**:
   ```bash
-  npm test
+  ./gradlew test
   ```
 
 ## Estructura del Proyecto
 
 ```text
 Sudoku-Mobile/
-├── assets/             # Recursos estáticos (imágenes, fuentes, iconos)
-├── src/
-│   ├── components/     # Componentes reutilizables de UI (Tablero, Botones, Teclado)
-│   ├── screens/        # Pantallas principales (Inicio, Juego, Ajustes, Estadísticas)
-│   ├── navigation/     # Configuración de rutas y navegadores (Stack, Tabs)
-│   ├── context/        # Proveedores de estado global (Juego, Tema)
-│   ├── utils/          # Algoritmos de solución, generación y validación de Sudoku
-│   └── hooks/          # Hooks personalizados para la lógica de la app
-├── App.js              # Punto de entrada principal de la aplicación
-├── package.json        # Archivo de configuración de dependencias y scripts
-└── README.md           # Documentación del proyecto
+├── app/
+│   ├── build.gradle              # Configuración y dependencias del módulo app
+│   └── src/
+│       ├── main/
+│       │   ├── java/             # Lógica en Java (Activities, Adapters, Modelos)
+│       │   ├── res/
+│       │   │   ├── layout/       # Diseños de interfaz en XML
+│       │   │   ├── values/       # Estilos, colores y cadenas de texto (strings.xml)
+│       │   │   └── drawable/     # Iconos y recursos gráficos
+│       │   └── AndroidManifest.xml # Configuración de componentes y permisos
+│       └── test/                 # Pruebas unitarias
+├── build.gradle                  # Configuración global del proyecto
+├── settings.gradle               # Módulos del proyecto
+└── README.md                     # Documentación del proyecto
 ```
 
 ## Licencia
 
-Este proyecto está bajo la Licencia MIT. Consulta el archivo [LICENSE](LICENSE) para obtener más detalles.
+Este proyecto está bajo la Licencia MIT. Consulta el archivo `LICENSE` para obtener más información.
