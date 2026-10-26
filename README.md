@@ -65,11 +65,6 @@ Comandos principales para ejecutar la aplicación en entorno de desarrollo:
   npm run android
   ```
 
-- **Ejecutar en emulador de iOS (Solo macOS):**
-  ```bash
-  npm run ios
-  ```
-
 - **Ejecutar suite de pruebas unitarias:**
   ```bash
   npm test
