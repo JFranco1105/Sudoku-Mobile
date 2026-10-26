@@ -39,7 +39,3 @@ Solitario-Mobile/
 - Modelar el estado de un juego de cartas (columnas, montones, baraja).
 - Validar reglas de movimiento en JavaScript.
 - Diseñar interacciones táctiles y una interfaz adaptable a móvil.
-
-## Licencia
-
-[MIT / indica la que uses]
