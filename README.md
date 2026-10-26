@@ -87,16 +87,6 @@ Sudoku-Mobile/
 └── README.md           # Documentación del proyecto
 ```
 
-## Contribución
-
-¡Las contribuciones son bienvenidas! Si deseas colaborar en la mejora del proyecto:
-
-1. Realiza un **Fork** de este repositorio.
-2. Crea una rama para tu nueva funcionalidad o corrección (`git checkout -b feature/nueva-funcionalidad`).
-3. Realiza tus cambios y confirma los commits (`git commit -m 'Añade nueva funcionalidad'`).
-4. Haz Push a tu rama en GitHub (`git push origin feature/nueva-funcionalidad`).
-5. Abre un **Pull Request** para revisión.
-
 ## Licencia
 
 Este proyecto está bajo la Licencia MIT. Consulta el archivo [LICENSE](LICENSE) para obtener más detalles.
